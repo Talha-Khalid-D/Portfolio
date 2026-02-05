@@ -55,3 +55,39 @@ const nav = document.querySelector(".nav"),
         removebacksection();
         addbacksection();
       })
+
+// Initialize EmailJS with your public key
+(function() {
+    emailjs.init("7Q7eohu-X_1i3ACjG"); // Replace with actual public key
+})();
+
+// Handle form submission
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    // Send email using EmailJS
+    emailjs.sendForm('service_5cqi2qr', 'template_dgf8z74', this)
+        .then(function(response) {
+            // Success
+            console.log('SUCCESS!', response.status, response.text);
+            document.getElementById('form-status').innerHTML = 
+                '<p style="color: green;">✓ Message sent successfully!</p>';
+            document.getElementById('contact-form').reset();
+        }, function(error) {
+            // Error
+            console.log('FAILED...', error);
+            document.getElementById('form-status').innerHTML = 
+                '<p style="color: red;">✗ Failed to send message. Please try again.</p>';
+        })
+        .finally(function() {
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+});
