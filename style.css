@@ -785,6 +785,14 @@ h3.my-profession{
   padding:0 50px;
 }
 
+
+#form-status p {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+    font-size: 14px;
+}
+
 /* media queries */
 
 @media(max-width:1199px){
